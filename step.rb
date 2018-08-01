@@ -8,7 +8,7 @@ class Step < Formula
   depends_on "go" => :build
 
   def install
-    system "sh gobuild.sh"
+      system "./brew/build"
     system "make", "build" # if this fails, try separate make/make install steps
   end
 
