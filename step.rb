@@ -13,6 +13,6 @@ class Step < Formula
   end
 
   test do
-    system "step", "crypto", "keypair", "foo.pub", "foo.priv"
+    system "step", "crypto", "keypair", "foo.pub", "foo.priv", "--no-password", "--insecure"
   end
 end
