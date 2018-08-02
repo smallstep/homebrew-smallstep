@@ -9,7 +9,7 @@ class Step < Formula
 
   def install
     system "./.brew/build"
-    bin.install "./bin/step" => "step"
+    bin.install "../.gobuild/src/github.com/smallstep/cli/bin/step" => "step"
   end
 
   test do
