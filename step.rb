@@ -10,10 +10,10 @@ class Step < Formula
   def install
     ENV["GOPATH"] = buildpath
     (buildpath/"src/github.com/smallstep/cli").install buildpath.children
-    ENV.prepend_create_path "PATH", buildpath/"bin"
     cd  "src/github.com/smallstep/cli" do
       system "make", "build"
       bin.install "bin/step" => "step"
+      bash_completion.install "autocomplete/bash_autocomplete" => "step"
     end
   end
 
