@@ -8,19 +8,35 @@ This repository contains `Ruby` Formulas for installing Smallstep tools via
 The `step cli` formula is located at [./step.rb](./step.rb). Below we will
 explain how to update this formula for new releases.
 
-### How to update the formula
+### Bumping the Version
 
-DO NOT EDIT [./step.rb](./step.rb). Instead run [./bin/step](./bin/step) to
-overwrite the existing formula.
+Homebrew will distribute the version of Step CLI hardcoded into the
+[step cli formula](./step.rb). Follow the steps below to update this formula.
 
-**Examples**:
+1. [Create and push a standard release](https://github.com/smallstep/cli/blob/master/distribution.md)
+of the [Step CLI](https://github.com/smallstep/cli).
 
-Download release `v0.0.1` and build as version `0.0.1`:
-```
-./step https://github.com/smallstep/cli/archive/v0.0.1.tar.gz v0.0.1
-```
+2. Update the Step CLI formula.
 
-Download release `v5.4.3` and build as version `0.1.2`:
-```
-./step https://github.com/smallstep/cli/archive/v5.4.3.tar.gz v0.1.2
-```
+    **DO NOT** edit [./step.rb](./step.rb) directly. Instead run [./bin/step](./bin/step)
+    with the appropriate arguments to update the existing formula.
+
+    Using the `tag` from step 1, run:
+
+    ```
+    # assuming the new tag is v1.0.3 ...
+
+    ./bin/step https://github.com/smallstep/cli/archive/v1.0.3.tar.gz v1.0.3
+    ```
+
+3. Commit and push your changes.
+
+4. Test
+
+    ```
+    brew install smallstep/smallstep/step
+    or ...
+    brew upgrade smallstep/smallstep/step
+    ```
+
+*All Done!*
