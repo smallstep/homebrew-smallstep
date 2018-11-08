@@ -24,15 +24,12 @@ if [ $# -ne 2 ]; then
 fi
 
 URL="${1}"
-VERSION="${2}"
-
 DIR="$( cd "$(dirname "$(dirname "$0")")" ; pwd -P )"
 
 cd "$(mktemp -d)"
 TMP="$(PWD)"
 trap "rm -rf \"${TMP}\"" EXIT INT QUIT TERM
 
-fname="step-cli-tarball"
 curl -O -J -L -s "${URL}"
 SHA="$(shasum -a 256 "$(ls . | tr -d "\r\n")" | awk '{printf $1}')"
 
@@ -53,11 +50,15 @@ class Step < Formula
 
   def install
     ENV["GOPATH"] = buildpath
-    (buildpath/"src/github.com/smallstep/cli").install buildpath.children
+    (buildpath/"src/github.com/smallstep").install buildpath.children
     cd  "src/github.com/smallstep/cli" do
-      system "env", "VERSION=${VERSION}", "make", "build"
+      system "env", "make", "build"
       bin.install "bin/step" => "step"
       bash_completion.install "autocomplete/bash_autocomplete" => "step"
+    end
+    cd  "src/github.com/smallstep/certificates" do
+      system "env", "make", "build"
+      bin.install "bin/step-ca" => "step-ca"
     end
   end
 
