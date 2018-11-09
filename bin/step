@@ -1,14 +1,12 @@
 #! /bin/sh
 #/
-#/ usage: ./step <url> <version>
+#/ usage: ./step <url>
 #/
 #/ positional arguments:
 #/   url        internet address from which to download step tarball
-#/   version    version that will appear when users run `step version`
 #/
 #/ examples:
-#/   - ./step https://github.com/smallstep/cli/archive/v0.0.1.tar.gz v0.0.1
-#/   - ./step https://github.com/smallstep/cli/archive/v5.4.3.tar.gz v0.1.2
+#/   - ./step https://github.com/smallstep/cli/releases/download/v0.0.2-rc.16/brew_step_0.0.2-rc.16.tar.gz
 #/
 
 set -e
@@ -18,7 +16,7 @@ usage() {
     exit $1
 }
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
     echo "Not enough positional arguments"
     usage 1
 fi
