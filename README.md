@@ -13,30 +13,35 @@ explain how to update this formula for new releases.
 Homebrew will distribute the version of Step CLI hardcoded into the
 [step cli formula](./step.rb). Follow the steps below to update this formula.
 
-1. [Create and push a standard release](https://github.com/smallstep/cli/blob/master/distribution.md)
-of the [Step CLI](https://github.com/smallstep/cli).
+1. Update the Step CLI formula.
 
-2. Update the Step CLI formula.
+**DO NOT** edit [./step.rb](./step.rb) directly. Instead run [./bin/step](./bin/step)
+with the appropriate arguments to update the existing formula.
 
-    **DO NOT** edit [./step.rb](./step.rb) directly. Instead run [./bin/step](./bin/step)
-    with the appropriate arguments to update the existing formula.
+Locate the [Github Release](https://github.com/smallstep/cli/releases) that should
+be deployed in the Step CLI Homebrew Formula. Copy the link address for the
+`brew_step_xxx.tar.gz` asset in the chosen Release.
 
-    Using the `tag` from step 1, run:
-
+Then run:
     ```
-    # assuming the new tag is v1.0.3 ...
-
-    ./bin/step https://github.com/smallstep/cli/archive/v1.0.3.tar.gz v1.0.3
+    ./bin/step https://github.com/smallstep/cli/releases/download/v0.0.2-rc.16/brew_step_0.0.2-rc.16.tar.gz
     ```
 
-3. Commit and push your changes.
-
-4. Test
+2. Test the formula locally.
 
     ```
-    brew install smallstep/smallstep/step
+    $ brew uninstall step
+    $ brew install --build-from-source ./step.rb
+    ```
+
+3. Commit and push your changes to the master branch.
+
+4. Test the public formula.
+
+    ```
+    $ brew install smallstep/smallstep/step
     or ...
-    brew upgrade smallstep/smallstep/step
+    $ brew upgrade smallstep/smallstep/step
     ```
 
 *All Done!*
