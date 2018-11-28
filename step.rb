@@ -6,19 +6,23 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://github.com/smallstep/cli"
-  url "https://github.com/smallstep/cli/archive/v0.0.1.tar.gz"
-  sha256 "64dff39016acc0ae61aefb8a25cec2b629ad86d1583a7a43ac69c96f4426cbb9"
+  url "https://github.com/smallstep/cli/releases/download/v0.8.1-rc.2/brew_step_0.8.1-rc.2.tar.gz"
+  sha256 "061ec073e3ea6beb00bfbf66f7dc5aa1b38fbf5dd86324085633ec1837476c15"
 
   depends_on "dep" => :build
   depends_on "go" => :build
 
   def install
     ENV["GOPATH"] = buildpath
-    (buildpath/"src/github.com/smallstep/cli").install buildpath.children
+    (buildpath/"src/github.com/smallstep").install buildpath.children
     cd  "src/github.com/smallstep/cli" do
-      system "env", "VERSION=v0.0.1", "make", "build"
+      system "env", "make", "build"
       bin.install "bin/step" => "step"
       bash_completion.install "autocomplete/bash_autocomplete" => "step"
+    end
+    cd  "src/github.com/smallstep/certificates" do
+      system "env", "make", "build"
+      bin.install "bin/step-ca" => "step-ca"
     end
   end
 

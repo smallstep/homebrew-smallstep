@@ -15,17 +15,17 @@ Homebrew will distribute the version of Step CLI hardcoded into the
 
 1. Update the Step CLI formula.
 
-**DO NOT** edit [./step.rb](./step.rb) directly. Instead run [./bin/step](./bin/step)
-with the appropriate arguments to update the existing formula.
+    **DO NOT** edit [./step.rb](./step.rb) directly. Instead run [./bin/step](./bin/step)
+    with the appropriate arguments to update the existing formula.
 
-Locate the [Github Release](https://github.com/smallstep/cli/releases) that should
-be deployed in the Step CLI Homebrew Formula. Copy the link address for the
-`brew_step_xxx.tar.gz` asset in the chosen Release.
+    Locate the [Github Release](https://github.com/smallstep/cli/releases) that should
+    be deployed in the Step CLI Homebrew Formula. Copy the link address for the
+    `brew_step_xxx.tar.gz` asset in the chosen Release.
 
-Then run:
-    ```
-    ./bin/step https://github.com/smallstep/cli/releases/download/v0.0.2-rc.16/brew_step_0.0.2-rc.16.tar.gz
-    ```
+    Then run:
+        ```
+        ./bin/step https://github.com/smallstep/cli/releases/download/v0.0.2-rc.16/brew_step_0.0.2-rc.16.tar.gz
+        ```
 
 2. Test the formula locally.
 
