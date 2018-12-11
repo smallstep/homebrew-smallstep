@@ -6,8 +6,8 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://github.com/smallstep/cli"
-  url "https://github.com/smallstep/cli/releases/download/v0.8.1-rc.2/brew_step_0.8.1-rc.2.tar.gz"
-  sha256 "061ec073e3ea6beb00bfbf66f7dc5aa1b38fbf5dd86324085633ec1837476c15"
+  url "https://github.com/smallstep/cli/releases/download/v0.8.1/brew_step_0.8.1.tar.gz"
+  sha256 "f252eca97e18925a345638718c9042c364895bb6560ed72ce053f035ae55f045"
 
   depends_on "dep" => :build
   depends_on "go" => :build
