@@ -5,7 +5,7 @@
 
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
-  homepage "https://github.com/smallstep/cli"
+  homepage "https://smallstep.com"
   url "https://github.com/smallstep/cli/releases/download/v0.8.3/brew_step_0.8.3.tar.gz"
   sha256 "6f93906ff1bea17dad02e8509fd06351ff3d8bdaa921b46f36aacfa47c44c762"
 
@@ -27,6 +27,23 @@ class Step < Formula
   end
 
   test do
+    # Generate a public / private key pair. Creates foo.pub and foo.priv.
     system "#{bin}/step", "crypto", "keypair", "foo.pub", "foo.priv", "--no-password", "--insecure"
+    assert_equal "foo.priv\nfoo.pub\n", shell_output("ls foo*")
+
+    # Generate a root certificate and private key with subject baz written to baz.crt and baz.key.
+    system "#{bin}/step", "certificate", "create", "--profile", "root-ca", "--no-password", "--insecure", "baz", "baz.crt", "baz.key"
+    assert_equal "baz.crt\nbaz.key\n", shell_output("ls baz*")
+    assert_equal "Subject: CN=baz\n", shell_output("#{bin}/step certificate inspect baz.crt | grep 'Subject: CN' | sed -e 's/^[ \t]*//'")
+    assert_equal "Issuer: CN=baz\n", shell_output("#{bin}/step certificate inspect baz.crt | grep 'Issuer: CN' | sed -e 's/^[ \t]*//'")
+
+    # Generate a leaf certificate signed by the previously created root.
+    system "#{bin}/step", "certificate", "create", "--profile", "intermediate-ca", "--no-password", "--insecure", "--ca", "baz.crt", "--ca-key", "baz.key", "zap", "zap.crt", "zap.key"
+    assert_equal "zap.crt\nzap.key\n", shell_output("ls zap*")
+    assert_equal "Subject: CN=zap\n", shell_output("#{bin}/step certificate inspect zap.crt | grep 'Subject: CN' | sed -e 's/^[ \t]*//'")
+    assert_equal "Issuer: CN=baz\n", shell_output("#{bin}/step certificate inspect zap.crt | grep 'Issuer: CN' | sed -e 's/^[ \t]*//'")
+
+    # Make sure that step-ca is installed.
+    system "#{bin}/step-ca", "version"
   end
 end
