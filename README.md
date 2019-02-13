@@ -10,21 +10,21 @@ explain how to update this formula for new releases.
 
 ### Bumping the Version
 
-Homebrew will distribute the version of Step CLI hardcoded into the
-[step cli formula](./step.rb). Follow the steps below to update this formula.
+Homebrew will distribute the versions of Step CLI and Step CA hardcoded into the
+[step formula](./step.rb). Follow the steps below to update this formula.
 
-1. Update the Step CLI formula.
+1. Update the Step formula.
 
     **DO NOT** edit [./step.rb](./step.rb) directly. Instead run [./bin/step](./bin/step)
-    with the appropriate arguments to update the existing formula.
+    with the appropriate arguments to update the formula.
 
-    Locate the [Github Release](https://github.com/smallstep/cli/releases) that should
-    be deployed in the Step CLI Homebrew Formula. Copy the link address for the
-    `brew_step_xxx.tar.gz` asset in the chosen Release.
+    Select the versions of `step cli` and `step certificates` that will be
+    distributed in the homebrew release.
 
     Then run:
         ```
-        ./bin/step https://github.com/smallstep/cli/releases/download/v0.0.2-rc.16/brew_step_0.0.2-rc.16.tar.gz
+        # ./bin/step <cli-version> <certificates-version>
+        $ ./bin/step v0.8.5 v0.8.4
         ```
 
 2. Test the formula locally.
@@ -32,6 +32,12 @@ Homebrew will distribute the version of Step CLI hardcoded into the
     ```
     $ brew uninstall step
     $ brew install --build-from-source ./step.rb
+
+    # Copy ./step.rb to /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/step.rb
+    # brew audit and brew test will be run against the formula stored in .../Taps/...
+    $ sudo cp ./step.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/step.rb
+    $ brew audit step --online --new-formula
+    $ brew test step
     ```
 
 3. Commit and push your changes to the master branch.
