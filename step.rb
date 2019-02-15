@@ -19,21 +19,19 @@ class Step < Formula
 
   def install
     ENV["GOPATH"] = buildpath
-    contents = Dir["{*,.git,.gitignore}"]
+    contents = Dir.glob("*", File::FNM_DOTMATCH) - %w[. ..]
     (buildpath/"src/github.com/smallstep/cli").install contents
 
     cd "src/github.com/smallstep/cli" do
-      ENV["VERSION"] = "v0.8.5"
       system "make", "build"
       bin.install "bin/step" => "step"
       bash_completion.install "autocomplete/bash_autocomplete" => "step"
     end
 
     resource("certificates").stage do
-      contents = Dir["{*,.git,.gitignore}"]
+      contents = Dir.glob("*", File::FNM_DOTMATCH) - %w[. ..]
       (buildpath/"src/github.com/smallstep/certificates").install contents
       cd "#{buildpath}/src/github.com/smallstep/certificates" do
-        ENV["VERSION"] = "v0.8.4"
         system "make", "build"
         bin.install "bin/step-ca" => "step-ca"
       end
@@ -41,11 +39,6 @@ class Step < Formula
   end
 
   test do
-    # Verify step version.
-    shell_output("#{bin}/step version | grep '0.8.5'")
-    # Verify step version.
-    shell_output("#{bin}/step-ca version | grep '0.8.4'")
-
     # Generate a public / private key pair. Creates foo.pub and foo.priv.
     system "#{bin}/step", "crypto", "keypair", "foo.pub", "foo.priv", "--no-password", "--insecure"
     assert_predicate testpath/"foo.pub", :exist?
