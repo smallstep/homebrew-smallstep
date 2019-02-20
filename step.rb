@@ -6,15 +6,15 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://github.com/smallstep/cli/archive/v0.8.5.tar.gz"
-  sha256 "b809c4638ffd6d0c3e1bff66d87d9fbea186783735544492c34f35fe1e9f9d79"
+  url "https://github.com/smallstep/cli/archive/v0.8.6.tar.gz"
+  sha256 "1aad35a78f8b7cfa59ced27131f547174344acf9333cad1d87731cb7b133ec41"
 
   depends_on "dep" => :build
   depends_on "go" => :build
 
   resource "certificates" do
-    url "https://github.com/smallstep/certificates/archive/v0.8.4.tar.gz"
-    sha256 "1dbfe1887f1d75d3020d75afcdcfdc846236b15d9f91ae6982229876f170978f"
+    url "https://github.com/smallstep/certificates/archive/v0.8.5.tar.gz"
+    sha256 "dc2b007247baeaa020a626813aea2b15fc2eb7f970cf0002a4b421fdf3ab294f"
   end
 
   def install
@@ -26,6 +26,7 @@ class Step < Formula
       system "make", "build"
       bin.install "bin/step" => "step"
       bash_completion.install "autocomplete/bash_autocomplete" => "step"
+      zsh_completion.install "autocomplete/zsh_autocomplete" => "_step"
     end
 
     resource("certificates").stage do

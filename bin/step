@@ -67,6 +67,7 @@ class Step < Formula
       system "make", "build"
       bin.install "bin/step" => "step"
       bash_completion.install "autocomplete/bash_autocomplete" => "step"
+      zsh_completion.install "autocomplete/zsh_autocomplete" => "_step"
     end
 
     resource("certificates").stage do
