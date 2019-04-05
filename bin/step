@@ -22,8 +22,8 @@ if [ $# -ne 2 ]; then
     usage 1
 fi
 
-CLI_URL="https://github.com/smallstep/cli/releases/download/${1}/step-cli.tar.gz"
-CERTIFICATES_URL="https://github.com/smallstep/certificates/releases/download/${2}/step-certificates.tar.gz"
+CLI_URL="https://github.com/smallstep/cli/releases/download/${1}/step-cli_${1#?}.tar.gz"
+CERTIFICATES_URL="https://github.com/smallstep/certificates/releases/download/${2}/step-certificates_${2#?}.tar.gz"
 DIR="$( cd "$(dirname "$(dirname "$0")")" ; pwd -P )"
 
 cd "$(mktemp -d)"
