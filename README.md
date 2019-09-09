@@ -21,33 +21,37 @@ Homebrew will distribute the versions of Step CLI and Step CA hardcoded into the
     Select the versions of `step cli` and `step certificates` that will be
     distributed in the homebrew release.
 
-    Then run:
-        ```
-        # ./bin/step <cli-version> <certificates-version>
-        $ ./bin/step v0.8.5 v0.8.4
-        ```
+    For example, suppose we are releasing `v0.12.0` for both `cli` and `certificates`.
+
+    Run:
+    <pre><code>
+    # Run './bin/step -h' to get help info.
+    <b>$ ./bin/step v0.12.0 v0.12.0</b>
+    </code></pre>
 
 2. Test the formula locally.
 
-    ```
-    $ brew uninstall step
-    $ brew install --build-from-source ./step.rb
+    <pre><code>
+    <b>$ brew uninstall step</b>
+    <b>$ brew install --build-from-source ./step.rb</b>
 
     # Copy ./step.rb to /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/step.rb
     # brew audit and brew test will be run against the formula stored in .../Taps/...
-    $ sudo cp ./step.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/step.rb
-    $ brew audit step --online --new-formula
-    $ brew test step
-    ```
+    <b>$ sudo cp ./step.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/step.rb<b>
+    <b>$ brew audit step --online --new-formula</b>
+    <b>$ brew test step</b>
+    </pre></code>
 
 3. Commit and push your changes to the master branch.
 
 4. Test the public formula.
 
-    ```
-    $ brew install smallstep/smallstep/step
-    or ...
-    $ brew upgrade smallstep/smallstep/step
-    ```
+    <pre><code>
+    <b>$ brew uninstall step</b>
+
+    <b>$ brew install smallstep/smallstep/step</b>
+    ... or ...
+    <b>$ brew upgrade smallstep/smallstep/step</b>
+    </pre></code>
 
 *All Done!*
