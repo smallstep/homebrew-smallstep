@@ -142,7 +142,6 @@ class Step < Formula
 
       shell_output("#{bin}/step ca token --password-file #{testpath}/password.txt " \\
 "homebrew-smallstep-leaf > token.txt")
-      assert_equal "foo", "foo"
       token = File.read(testpath/"token.txt")
       system "#{bin}/step", "ca", "certificate", "--token", token,
           "homebrew-smallstep-leaf", "brew.crt", "brew.key"
