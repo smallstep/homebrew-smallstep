@@ -16,27 +16,16 @@ class Step < Formula
   end
 
   def install
-    ENV["GOPATH"] = buildpath
-    contents = Dir.glob("*", File::FNM_DOTMATCH) - %w[. ..]
-    (buildpath/"src/github.com/smallstep/cli").install contents
+    ENV["VERSION"] = version.to_s
+    system "make", "build"
+    bin.install "bin/step" => "step"
+    bash_completion.install "autocomplete/bash_autocomplete" => "step"
+    zsh_completion.install "autocomplete/zsh_autocomplete" => "_step"
 
-    cd "src/github.com/smallstep/cli" do
-      ENV["VERSION"] = "v0.15.15"
+    resource("certificates").stage do |r|
+      ENV["VERSION"] = r.version.to_s
       system "make", "build"
-      bin.install "bin/step" => "step"
-      bash_completion.install "autocomplete/bash_autocomplete" => "step"
-      zsh_completion.install "autocomplete/zsh_autocomplete" => "_step"
-    end
-
-    resource("certificates").stage do
-      contents = Dir.glob("*", File::FNM_DOTMATCH) - %w[. ..]
-      (buildpath/"src/github.com/smallstep/certificates").install contents
-
-      cd "#{buildpath}/src/github.com/smallstep/certificates" do
-        ENV["VERSION"] = "v0.15.13"
-        system "make", "build"
-        bin.install "bin/step-ca" => "step-ca"
-      end
+      bin.install "bin/step-ca" => "step-ca"
     end
   end
 
