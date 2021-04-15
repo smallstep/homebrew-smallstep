@@ -4,16 +4,15 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://github.com/smallstep/cli/releases/download/v0.15.7/step_0.15.7.tar.gz"
-  sha256 "2ca9cb702661da5254397d50e8dbeccdcbfdc465b680d36054eed8b9980f5021"
+  url "https://github.com/smallstep/cli/releases/download/v0.15.15/step_0.15.15.tar.gz"
+  sha256 "c9d1776c3cb9f7764f62d47b484306f9e3072ce8a6131d77150039059d951765"
   license "Apache-2.0"
 
-  depends_on "dep" => :build
   depends_on "go" => :build
 
   resource "certificates" do
-    url "https://github.com/smallstep/certificates/releases/download/v0.15.8/step-certificates_0.15.8.tar.gz"
-    sha256 "b94c885410036a9743f8f1a43b982452ea226527748c834b8f6e953a4ee642a1"
+    url "https://github.com/smallstep/certificates/releases/download/v0.15.13/step-ca_0.15.13.tar.gz"
+    sha256 "cccd21e7bf3203aff08b0af36569715d137d7586473bc8eba19c1a7dbbe0a907"
   end
 
   def install
@@ -22,6 +21,7 @@ class Step < Formula
     (buildpath/"src/github.com/smallstep/cli").install contents
 
     cd "src/github.com/smallstep/cli" do
+      ENV["VERSION"] = "v0.15.15"
       system "make", "build"
       bin.install "bin/step" => "step"
       bash_completion.install "autocomplete/bash_autocomplete" => "step"
@@ -31,7 +31,9 @@ class Step < Formula
     resource("certificates").stage do
       contents = Dir.glob("*", File::FNM_DOTMATCH) - %w[. ..]
       (buildpath/"src/github.com/smallstep/certificates").install contents
+
       cd "#{buildpath}/src/github.com/smallstep/certificates" do
+        ENV["VERSION"] = "v0.15.13"
         system "make", "build"
         bin.install "bin/step-ca" => "step-ca"
       end
