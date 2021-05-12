@@ -6,6 +6,7 @@ class Step < Formula
   homepage "https://smallstep.com"
   url "https://github.com/smallstep/cli/releases/download/v0.15.16/step_0.15.16.tar.gz"
   sha256 "4366c90497420ca1a51fd1ba558826d7502467e7eed40654cf7f08dbc8854c27"
+  revision 1
   license "Apache-2.0"
 
   depends_on "go" => :build
@@ -17,6 +18,7 @@ class Step < Formula
 
   def install
     ENV["VERSION"] = version.to_s
+    ENV["CGO_OVERRIDE"] = 'CGO_ENABLED=1'    # Temporary fix for smallstep/cli#383. Upstream issue: golang/go#12524
     system "make", "build"
     bin.install "bin/step" => "step"
     bash_completion.install "autocomplete/bash_autocomplete" => "step"
