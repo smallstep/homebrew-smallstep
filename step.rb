@@ -4,21 +4,21 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://github.com/smallstep/cli/releases/download/v0.15.16/step_0.15.16.tar.gz"
-  sha256 "4366c90497420ca1a51fd1ba558826d7502467e7eed40654cf7f08dbc8854c27"
-  revision 1
+  url "https://github.com/smallstep/cli/releases/download/v0.16.0/step_0.16.0.tar.gz"
+  sha256 "5fe73a4a25cd5007ace1c4d6235af87c1ddc8ea5a034e3fe75877e9ba8deb6e4"
   license "Apache-2.0"
 
   depends_on "go" => :build
 
   resource "certificates" do
-    url "https://github.com/smallstep/certificates/releases/download/v0.15.14/step-ca_0.15.14.tar.gz"
-    sha256 "a2e479444e362dd2045f13941353393cb79bc09eb6c24d19bb07af4bb6a4ffcc"
+    url "https://github.com/smallstep/certificates/releases/download/v0.16.0/step-ca_0.16.0.tar.gz"
+    sha256 "d4f333bd972eb5b6bd2cf4a4fa403574e6dceffaa54109c0f8251cf37f1dfa48"
   end
 
   def install
     ENV["VERSION"] = version.to_s
-    ENV["CGO_OVERRIDE"] = 'CGO_ENABLED=1'    # Temporary fix for smallstep/cli#383. Upstream issue: golang/go#12524
+    # Temporary fix for smallstep/cli#383. Upstream issue: golang/go#12524
+    ENV["CGO_OVERRIDE"] = "CGO_ENABLED=1"
     system "make", "build"
     bin.install "bin/step" => "step"
     bash_completion.install "autocomplete/bash_autocomplete" => "step"
@@ -92,7 +92,7 @@ class Step < Formula
       assert_match(/^ok$/, File.read(testpath/"health_response.txt"))
 
       shell_output("#{bin}/step ca token --password-file #{testpath}/password.txt " \
-"homebrew-smallstep-leaf > token.txt")
+                   "homebrew-smallstep-leaf > token.txt")
       token = File.read(testpath/"token.txt")
       system "#{bin}/step", "ca", "certificate", "--token", token,
           "homebrew-smallstep-leaf", "brew.crt", "brew.key"
