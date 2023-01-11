@@ -4,15 +4,15 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://dl.step.sm/gh-release/cli/homebrew-local/v0.23.0/step_0.23.0.tar.gz"
-  sha256 "8056deefa22a2d5f5d60ceaf652346a3eb8e4ac2ccad535364b29de5e1830b4c"
+  url "https://dl.step.sm/gh-release/cli/homebrew-local/v0.23.1/step_0.23.1.tar.gz"
+  sha256 "81fe0f2a1e3a897757b3dc51e7edb6cb1fca3cece80d952388b4c41ca57be334"
   license "Apache-2.0"
 
   depends_on "go" => :build
 
   resource "certificates" do
-    url "https://dl.step.sm/gh-release/certificates/homebrew-local/v0.23.0/step-ca_0.23.0.tar.gz"
-    sha256 "fc727c35d5513e9b6eebd4d5c183944af165b3dbdf3a788fa6d122cb2f3fc676"
+    url "https://dl.step.sm/gh-release/certificates/homebrew-local/v0.23.1/step-ca_0.23.1.tar.gz"
+    sha256 "9d31db46f2da00ff72bbc5584cecd971e9600a8791d0385fd3e1106d957b4741"
   end
 
   def install
